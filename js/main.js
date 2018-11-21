@@ -1,5 +1,3 @@
-'use strict';
-
 const KeyCode = {
   LEFT_ARROW: 37,
   RIGHT_ARROW: 39
@@ -8,8 +6,6 @@ const KeyCode = {
 const screens = Array
   .from(document.querySelectorAll(`template`))
   .map((it) => it.content);
-
-const mainEl = document.querySelector(`.main`);
 
 const showScreen = (screen) => {
   mainEl.innerHTML = ``;
