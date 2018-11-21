@@ -1,4 +1,6 @@
-import {getElementFromTemplate} from './utils';
+import {getElementFromTemplate, renderScreen} from './utils';
+import welcomeScreenElement from './welcome';
+import gameArtistScreenElement from './game-artist';
 
 const template = `
   <section class="game game--genre">
@@ -80,5 +82,22 @@ const template = `
 `;
 
 const element = getElementFromTemplate(template);
+
+const backBtn = element.querySelector(`.game__back`);
+backBtn.addEventListener(`click`, () => renderScreen(welcomeScreenElement));
+
+const form = element.querySelector(`.game__tracks`);
+const submitBtn = form.querySelector(`.game__submit`);
+submitBtn.disabled = true;
+submitBtn.addEventListener(`click`, () => {
+  renderScreen(gameArtistScreenElement);
+  form.reset();
+  submitBtn.disabled = true;
+});
+
+const answers = Array.from(form.querySelectorAll(`input`));
+form.addEventListener(`change`, () => {
+  submitBtn.disabled = !answers.some((answer) => answer.checked);
+});
 
 export default element;

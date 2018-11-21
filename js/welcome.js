@@ -1,4 +1,5 @@
-import {getElementFromTemplate} from './utils';
+import {getElementFromTemplate, renderScreen} from './utils';
+import genreScreenElement from './game-genre';
 
 const template = `
   <section class="welcome">
@@ -15,5 +16,8 @@ const template = `
 `;
 
 const element = getElementFromTemplate(template);
+
+const startGameBtn = element.querySelector(`.welcome__button`);
+startGameBtn.addEventListener(`click`, () => renderScreen(genreScreenElement));
 
 export default element;

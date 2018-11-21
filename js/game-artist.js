@@ -1,4 +1,8 @@
-import {getElementFromTemplate} from './utils';
+import {getElementFromTemplate, renderScreen} from './utils';
+import welcomeScreenElement from './welcome';
+import successScreenElement from './result-success';
+import failTriesScreenElement from './fail-tries';
+import failTimeScreenElement from './fail-time';
 
 const template = `
   <section class="game game--artist">
@@ -61,5 +65,12 @@ const template = `
   </section>
 `;
 const element = getElementFromTemplate(template);
+
+const backBtn = element.querySelector(`.game__back`);
+backBtn.addEventListener(`click`, () => renderScreen(welcomeScreenElement));
+
+const resultScreens = [successScreenElement, failTimeScreenElement, failTriesScreenElement];
+const form = element.querySelector(`.game__artist`);
+form.addEventListener(`change`, () => renderScreen(resultScreens[Math.floor(Math.random() * resultScreens.length)]));
 
 export default element;
