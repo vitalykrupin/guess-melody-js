@@ -1,7 +1,7 @@
 import {getElementFromTemplate, renderScreen} from './utils';
-import welcomeScreenElement from './welcome';
+import getWelcomeScreenElement from './welcome';
 
-const template = `
+const getTemplate = () => `
   <section class="result">
     <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
     <h2 class="result__title">Какая жалость!</h2>
@@ -9,9 +9,12 @@ const template = `
     <button class="result__replay" type="button">Попробовать ещё раз</button>
   </section>
 `;
-const element = getElementFromTemplate(template);
 
-const replayBtn = element.querySelector(`.result__replay`);
-replayBtn.addEventListener(`click`, () => renderScreen(welcomeScreenElement));
+export default () => {
+  const element = getElementFromTemplate(getTemplate());
 
-export default element;
+  const replayBtn = element.querySelector(`.result__replay`);
+  replayBtn.addEventListener(`click`, () => renderScreen(getWelcomeScreenElement()));
+
+  return element;
+};

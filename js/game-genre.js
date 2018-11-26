@@ -1,103 +1,80 @@
-import {getElementFromTemplate, renderScreen} from './utils';
-import welcomeScreenElement from './welcome';
-import gameArtistScreenElement from './game-artist';
+import {getElementFromTemplate, renderScreen, checkAnswerCorrect, setAnswerTime, renderNextScreen} from './utils';
+import {MAX_QUESTIONS} from './constants';
+import getSuccessScreenElement from './result-success';
+import getHeaderElement from './header';
+import controller from './controller';
 
-const template = `
-  <section class="game game--genre">
-    <header class="game__header">
-      <a class="game__back" href="#">
-        <span class="visually-hidden">Сыграть ещё раз</span>
-        <img class="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию">
-      </a>
-
-      <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-        <circle class="timer__line" cx="390" cy="390" r="370"
-                style="filter: url(#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"/>
-      </svg>
-
-      <div class="timer__value" xmlns="http://www.w3.org/1999/xhtml">
-        <span class="timer__mins">05</span>
-        <span class="timer__dots">:</span>
-        <span class="timer__secs">00</span>
-      </div>
-
-      <div class="game__mistakes">
-        <div class="wrong"></div>
-        <div class="wrong"></div>
-        <div class="wrong"></div>
-      </div>
-    </header>
-
-    <section class="game__screen">
-      <h2 class="game__title">Выберите инди-рок треки</h2>
-      <form class="game__tracks">
-        <div class="track">
-          <button class="track__button track__button--play" type="button"></button>
-          <div class="track__status">
-            <audio></audio>
+const getTemplate = (question) => `
+    <section class="game game--genre">
+      <section class="game__screen">
+        <h2 class="game__title">${question.title}</h2>
+        <form class="game__tracks">
+          ${question.questions.map((it) => `
+          <div class="track">
+            <button class="track__button track__button--play" type="button"></button>
+            <div class="track__status">
+              <audio src="${it.src}"></audio>
+            </div>
+            <div class="game__answer">
+              <input class="game__input visually-hidden" type="checkbox" name="answer" value="${it.genre}" id="answer-${it.src}">
+              <label class="game__check" for="answer-${it.src}">Отметить</label>
+            </div>
           </div>
-          <div class="game__answer">
-            <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-1">
-            <label class="game__check" for="answer-1">Отметить</label>
-          </div>
-        </div>
-
-        <div class="track">
-          <button class="track__button track__button--play" type="button"></button>
-          <div class="track__status">
-            <audio></audio>
-          </div>
-          <div class="game__answer">
-            <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-2">
-            <label class="game__check" for="answer-2">Отметить</label>
-          </div>
-        </div>
-
-        <div class="track">
-          <button class="track__button track__button--pause" type="button"></button>
-          <div class="track__status">
-            <audio></audio>
-          </div>
-          <div class="game__answer">
-            <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-3">
-            <label class="game__check" for="answer-3">Отметить</label>
-          </div>
-        </div>
-
-        <div class="track">
-          <button class="track__button track__button--play" type="button"></button>
-          <div class="track__status">
-            <audio></audio>
-          </div>
-          <div class="game__answer">
-            <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-4">
-            <label class="game__check" for="answer-4">Отметить</label>
-          </div>
-        </div>
-
-        <button class="game__submit button" type="submit">Ответить</button>
-      </form>
+          `).join(``)}
+          <button class="game__submit button" type="submit" disabled>Ответить</button>
+        </form>
+      </section>
     </section>
-  </section>
-`;
+  `;
 
-const element = getElementFromTemplate(template);
+export default (question) => {
+  const element = getElementFromTemplate(getTemplate(question));
+  element.insertAdjacentElement(`afterbegin`, getHeaderElement());
+  const form = element.querySelector(`.game__tracks`);
 
-const backBtn = element.querySelector(`.game__back`);
-backBtn.addEventListener(`click`, () => renderScreen(welcomeScreenElement));
+  form.addEventListener(`click`, (evt) => {
+    const trackControl = evt.target;
+    if (trackControl.classList.contains(`track__button`)) {
+      const trackEl = trackControl.closest(`.track`);
+      const audioEl = trackEl.querySelector(`audio`);
+      if (audioEl.paused) {
+        audioEl.play();
+        trackControl.classList.add(`track__button--pause`);
+      } else {
+        audioEl.pause();
+        trackControl.classList.remove(`track__button--pause`);
+      }
+    }
+  });
 
-const form = element.querySelector(`.game__tracks`);
-const submitBtn = form.querySelector(`.game__submit`);
-submitBtn.disabled = true;
-submitBtn.addEventListener(`click`, () => {
-  renderScreen(gameArtistScreenElement);
-  form.reset();
-  submitBtn.disabled = true;
-});
+  const submitButton = element.querySelector(`.game__submit`);
+  submitButton.addEventListener(`click`, () => {
+    const answerEls = [...form.elements.answer];
+    if (controller.state.answers.length < MAX_QUESTIONS) {
+      const currentAnswer = checkAnswerCorrect(answerEls, question.answer);
 
-const answers = Array.from(form.querySelectorAll(`input`));
-form.addEventListener(`change`, () => {
-  submitBtn.disabled = !answers.some((answer) => answer.checked);
-});
+      controller.state.answers.push({
+        correct: currentAnswer,
+        time: setAnswerTime()
+      });
 
-export default element;
+      if (!currentAnswer) {
+        controller.state.mistake += 1;
+      }
+
+      renderNextScreen();
+      submitButton.disabled = true;
+      form.reset();
+    } else {
+      renderScreen(getSuccessScreenElement(controller.state));
+      form.reset();
+    }
+  });
+
+  const answers = Array.from(element.querySelectorAll(`input`));
+  form.addEventListener(`change`, () => {
+    submitButton.disabled = !answers.some((answer) => answer.checked);
+  });
+
+  return element;
+};
