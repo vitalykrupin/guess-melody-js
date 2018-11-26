@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {setScorePoints, showStats} from './utils';
+import {showStats} from './utils';
 
 const setGameResults = (playerLives, playerPoints, playerTime) => ({
   lives: playerLives,
@@ -8,91 +8,6 @@ const setGameResults = (playerLives, playerPoints, playerTime) => ({
 });
 
 const statistics = [4, 5, 8, 10, 11];
-
-describe(`ScorePoints`, () => {
-  it(`should be 10 correct answers in arr`, () => {
-    assert.strictEqual(setScorePoints([
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31}
-    ], 2), 10);
-  });
-
-  it(`should return -1 if answers < 10`, () => {
-    assert.strictEqual(setScorePoints([
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31}
-    ], 2), -1);
-  });
-
-  it(`should return -1 if lives === 0`, () => {
-    assert.strictEqual(setScorePoints([
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31}
-    ], 0), -1);
-  });
-
-  it(`should be num`, () => {
-    assert.strictEqual(setScorePoints([
-      {correct: false, time: 31},
-      {correct: false, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31}
-    ], 2), 4);
-    assert.strictEqual(setScorePoints([
-      {correct: false, time: 20},
-      {correct: false, time: 20},
-      {correct: true, time: 20},
-      {correct: true, time: 20},
-      {correct: true, time: 20},
-      {correct: true, time: 20},
-      {correct: true, time: 20},
-      {correct: true, time: 20},
-      {correct: true, time: 20},
-      {correct: true, time: 20}
-    ], 2), 12);
-    assert.strictEqual(setScorePoints([
-      {correct: true, time: 20},
-      {correct: true, time: 20},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31},
-      {correct: true, time: 31}
-    ], 2), 12);
-  });
-});
 
 describe(`Stats`, () => {
   it(`should return Вы заняли 1 место из 6 игроков. Это лучше, чем у 83% игроков.`, () => {
