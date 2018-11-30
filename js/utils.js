@@ -100,3 +100,18 @@ export const showStats = (state) => {
 
   return `Вы заняли ${place} место из ${quantity} игроков. Это лучше, чем у ${rate}% игроков.`;
 };
+
+export const getFormatedTime = (initTime) => {
+  const minutes = Math.floor(initTime / 60);
+  const seconds = initTime - minutes * 60;
+  const time = {
+    minutes,
+    seconds
+  };
+
+  if (time.seconds < 10) {
+    time.seconds = `0` + time.seconds;
+  }
+
+  return time;
+};
