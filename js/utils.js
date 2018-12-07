@@ -1,27 +1,18 @@
-const mainElement = document.querySelector(`.main`);
-
-export const getElementFromTemplate = (template) => {
-  const wrapper = document.createElement(`div`);
-  wrapper.innerHTML = template.trim();
-  return wrapper.children[0];
+const Dictionary = {
+  min: [`минуту`, `минуты`, `минут`],
+  sec: [`секунду`, `секунды`, `секунд`],
+  note: [`ошибку`, `ошибки`, `ошибок`],
+  point: [`балл`, `балла`, `баллов`],
+  fast: [`быстрый`, `быстрых`, `быстрых`],
 };
 
-export const renderScreen = (gameScreen) => {
-  mainElement.innerHTML = ``;
-  mainElement.appendChild(gameScreen);
-};
-
-export const getFormatedTime = (initTime) => {
-  const minutes = Math.floor(initTime / 60);
-  const seconds = initTime - minutes * 60;
-  const time = {
-    minutes,
-    seconds
-  };
-
-  if (time.seconds < 10) {
-    time.seconds = `0` + time.seconds;
+export const formatWord = (number, item) => {
+  const words = Dictionary[item];
+  if ((number === 1) || (number > 20 && number % 10 === 1)) {
+    return words[0];
+  } else if ((number >= 2 && number <= 4) || (number > 20 && number % 10 >= 2 && number % 10 <= 4)) {
+    return words[1];
+  } else {
+    return words[2];
   }
-
-  return time;
 };
