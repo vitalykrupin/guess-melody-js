@@ -16,3 +16,13 @@ export const formatWord = (number, item) => {
     return words[2];
   }
 };
+
+
+const main = document.querySelector(`.app`).querySelector(`.main`);
+
+export const getElementFromString = (str) => new DOMParser().parseFromString(str, `text/html`).body.firstChild;
+
+export const showScreen = (screen) => {
+  main.textContent = ``;
+  main.appendChild(screen);
+};
