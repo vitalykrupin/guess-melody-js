@@ -1,29 +1,24 @@
+import {showScreen} from './render';
 import WelcomeScreen from './screens/welcome-screen';
-import GameModel from './data/game-model';
 import GameScreen from './screens/game-screen';
-import ResultScreen from './screens/result-screen';
-
+import GameModel from './data/game-model';
 
 export default class App {
 
-  static _showScreen(element) {
-    const mainScreen = document.querySelector(`.main`);
-    mainScreen.parentNode.replaceChild(element, mainScreen);
-  }
-
   static showWelcome() {
-    const welcome = new WelcomeScreen();
-    this._showScreen(welcome.element);
+    const welcomeScreen = new WelcomeScreen();
+    showScreen(welcomeScreen.element);
   }
 
   static showGame() {
-    const gameScreen = new GameScreen(new GameModel());
-    this._showScreen(gameScreen.element);
-    gameScreen.startGame();
+    const screen = new GameScreen(new GameModel());
+    showScreen(screen.element);
   }
 
-  static showStats(screenType, stats) {
-    const resultScreen = new ResultScreen(screenType, stats);
-    this._showScreen(resultScreen.element);
+  static showResult(result) {
+    result.replayButtonClickHandler = () => {
+      this.showGame();
+    };
+    showScreen(result.element);
   }
 }
