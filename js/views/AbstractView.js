@@ -1,10 +1,7 @@
-const getElementFromTemplate = (template) => {
-  const wrapper = document.createElement(`div`);
-  wrapper.innerHTML = template.trim();
-  return wrapper.children[0];
-};
+import {getElementFromString} from '../utils';
 
 export default class AbstractView {
+
   constructor() {
     if (new.target === AbstractView) {
       throw new Error(`Can't instantiate AbstractView, only concrete one`);
@@ -25,11 +22,8 @@ export default class AbstractView {
   }
 
   render() {
-    return getElementFromTemplate(this.temlate);
+    return getElementFromString(this.template);
   }
 
-  bind() {
-    // bind handlers if req
-  }
-
+  bind() {}
 }
