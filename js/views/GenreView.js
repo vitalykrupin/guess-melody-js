@@ -1,85 +1,92 @@
-import AbstractView from './AbstractView';
+import {playerGenre} from '../screens/player';
+import AbstractView from '../views/AbstractView';
+import string from '../data/string-data';
+import header from '../screens/header';
 
-const Titles = {
-  JAZZ: `джазз`,
-  ROCK: `рок`,
-  COUNTRY: `кантри`,
-  RNB: `R&B`,
-  POP: `поп`,
-  ELECTRONIC: `электроник`
-};
+const DEBUG = true;
+const DEBUG_STYLE = `style="border:1px solid red;"`;
 
 export default class GenreView extends AbstractView {
-  constructor(level) {
+
+  constructor(state, questions) {
     super();
-    this.level = level;
-    this.Titles = Titles;
+    this.state = state;
+    this.questions = questions;
   }
 
   get template() {
     return `
-      <section class="game__screen">
-        <h2 class="game__title">Выберите все треки в стиле ${this.Titles[this.level.genre]}</h2>
-        <form class="game__tracks">
-          ${this.level.answers.map((answer, index) => `
-            <div class="track">
-              <button class="track__button track__button--play" type="button"></button>
-              <div class="track__status">
-                <audio src ="${answer.audio}" ${answer.autoplay ? `autoplay` : ``}></audio>
-              </div>
-              <div class="game__answer">
-                <input class="game__input visually-hidden" type="checkbox" name="answer" value="${answer.correct}" id="answer-${index}">
-                <label class="game__check" for="answer-${index}">Отметить</label>
-              </div>
-            </div>`).join(``)};
-          <button class="game__submit button" type="submit">Ответить</button>
-        </form>
+      <section class="game game--genre">
+        ${header(this.state)}
+        <section class="game__screen">
+          <h2 class="game__title">${this.questions.question}</h2>
+          <form class="game__tracks">
+            ${[...Object.entries(this.questions.answers)]
+              .map(([id, answer]) => {
+                return `
+                  ${playerGenre(answer.song.src)}
+                  <div class="game__answer">
+                    <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="${id}">
+                    <label class="game__check" ${DEBUG && answer.correct ? DEBUG_STYLE : ``} for="${id}">Отметить</label>
+                  </div>
+                `;
+              })
+              .join(` `)}
+            <button class="game__submit button" type="submit">${string.buttons.answerSend}</button>
+          </form>
+        </section>
       </section>
     `;
   }
 
-  bind(element) {
-    const audio = Array.from(element.querySelectorAll(`audio`));
-    const playerButtons = Array.from(element.querySelectorAll(`.track__button`));
-    playerButtons[0].classList.add(`track__button--pause`);
-    audio[0].play();
+  answerButtonClickHandler() {}
 
-    playerButtons.forEach((btn, index) => {
-      btn.addEventListener(`click`, (event) => {
-        event.preventDefault();
+  replayButtonClickHandler() {}
 
-        if (btn.classList.contains(`track__button--pause`)) {
-          btn.classList.remove(`track__button--pause`);
-          audio[index].pause();
-        } else {
-          for (let i = 0; i < playerButtons.length; i++) {
-            playerButtons[i].classList.remove(`track__button--pause`);
-            audio[i].pause();
-          }
+  bind() {
+    const form = this.element.querySelector(`.game__tracks`);
+    const answers = Array.from(form.querySelectorAll(`input`));
+    const answerButton = form.querySelector(`.game__submit`);
+    answerButton.disabled = true;
 
-          btn.classList.add(`track__button--pause`);
-          audio[index].play();
-        }
-      });
-    });
-
-    const genreForm = element.querySelector(`.game__tracks`);
-    genreForm.addEventListener(`click`, (event) => {
-      if (event.target.name === `answer`) {
-        const isAnswerChecked = genreForm.querySelectorAll(`[name="answer"]:checked`);
-        submitButton.disabled = isAnswerChecked.length === 0;
+    const answersChangeHandler = () => {
+      if (answers.some((element) => element.checked)) {
+        answerButton.disabled = false;
+      } else {
+        answerButton.disabled = true;
       }
+    };
+
+    answers.forEach((item) => {
+      item.addEventListener(`change`, answersChangeHandler);
     });
 
-    const submitButton = genreForm.querySelector(`.game__submit`);
-    submitButton.addEventListener(`click`, (evt) => {
+    answerButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      const userAnswers = genreForm.querySelectorAll(`[name="answer"]`);
-      this.onAnswerClick(userAnswers);
-      genreForm.reset();
-      submitButton.disabled = true;
+      const checkedAnswer = answers.filter((input) => input.checked).map((element) => element.id);
+      this.answerButtonClickHandler(checkedAnswer);
+    });
+
+    const players = Array.from(this.element.querySelectorAll(`div.track`));
+    const playerButtons = players.map((element) => element.querySelector(`.track__button`));
+    const audio = Array.from(this.element.querySelectorAll(`audio`));
+
+    const playAudio = (evt) => {
+      if (audio.paused) {
+        evt.target.classList.replace(`track__button--play`, `track__button--pause`);
+        audio.play();
+      } else {
+        evt.target.classList.replace(`track__button--pause`, `track__button--play`);
+        audio.pause();
+      }
+    };
+
+    playerButtons.forEach((item) => {
+      item.addEventListener(`click`, playAudio);
+    });
+
+    this.element.querySelector(`.game__back`).addEventListener(`click`, () => {
+      this.replayButtonClickHandler();
     });
   }
-
-  onAnswerClick() {}
 }
