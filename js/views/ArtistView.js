@@ -6,7 +6,6 @@ const DEBUG = true;
 const DEBUG_STYLE = `style="color:red;"`;
 
 export default class ArtistView extends AbstractView {
-
   constructor(state, questions) {
     super();
     this.state = state;

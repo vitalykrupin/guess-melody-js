@@ -1,4 +1,4 @@
-import string from './string-data';
+import data from './data';
 
 export const QuestionType = {
   ARTIST: `artist`,
@@ -54,7 +54,7 @@ export const gameQuestions = [
   {
     type: QuestionType.ARTIST,
     src: songs[0].src,
-    question: `${string.artist.question}`,
+    question: `${data.artist.question}`,
     answers: {
       'artist-1': {song: songs[0], correct: true},
       'artist-2': {song: songs[1], correct: false},
@@ -64,7 +64,7 @@ export const gameQuestions = [
   {
     type: QuestionType.ARTIST,
     src: songs[1].src,
-    question: `${string.artist.question}`,
+    question: `${data.artist.question}`,
     answers: {
       'artist-1': {song: songs[1], correct: true},
       'artist-2': {song: songs[3], correct: false},
@@ -74,7 +74,7 @@ export const gameQuestions = [
   {
     type: QuestionType.ARTIST,
     src: songs[2].src,
-    question: `${string.artist.question}`,
+    question: `${data.artist.question}`,
     answers: {
       'artist-1': {song: songs[2], correct: true},
       'artist-2': {song: songs[3], correct: false},
@@ -84,7 +84,7 @@ export const gameQuestions = [
   {
     type: QuestionType.ARTIST,
     src: songs[3].src,
-    question: `${string.artist.question}`,
+    question: `${data.artist.question}`,
     answers: {
       'artist-1': {song: songs[0], correct: false},
       'artist-2': {song: songs[4], correct: false},
@@ -94,7 +94,7 @@ export const gameQuestions = [
   {
     type: QuestionType.ARTIST,
     src: songs[4].src,
-    question: `${string.artist.question}`,
+    question: `${data.artist.question}`,
     answers: {
       'artist-1': {song: songs[5], correct: false},
       'artist-2': {song: songs[4], correct: true},
@@ -104,7 +104,7 @@ export const gameQuestions = [
   {
     type: QuestionType.ARTIST,
     src: songs[5].src,
-    question: `${string.artist.question}`,
+    question: `${data.artist.question}`,
     answers: {
       'artist-1': {song: songs[3], correct: false},
       'artist-2': {song: songs[2], correct: false},

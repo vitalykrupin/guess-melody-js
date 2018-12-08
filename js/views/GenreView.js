@@ -1,13 +1,12 @@
 import {playerGenre} from '../screens/player';
 import AbstractView from '../views/AbstractView';
-import string from '../data/string-data';
+import string from '../data/data';
 import header from '../screens/header';
 
 const DEBUG = true;
 const DEBUG_STYLE = `style="border:1px solid red;"`;
 
 export default class GenreView extends AbstractView {
-
   constructor(state, questions) {
     super();
     this.state = state;

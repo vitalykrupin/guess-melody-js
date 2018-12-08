@@ -1,11 +1,11 @@
-import string from './string-data';
+import data from './data';
 
 export const showResults = (statistics, gameResult) => {
   if (gameResult.time <= 0) {
-    return `${string.result.timeLose}`;
+    return `${data.result.timeLose}`;
   }
   if (gameResult.lives <= 0) {
-    return `${string.result.loseStat}`;
+    return `${data.result.loseStat}`;
   }
   const userPoints = gameResult.UserPoint;
   const points = statistics.map((item) => item.points);
