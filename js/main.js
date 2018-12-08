@@ -1,4 +1,3 @@
-import {renderScreen} from './utils';
-import getWelcomeScreenElement from './welcome';
+import App from './App';
 
-renderScreen(getWelcomeScreenElement());
+App.showWelcome();

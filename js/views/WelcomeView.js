@@ -1,34 +1,34 @@
-import AbstractView from './AbstractView';
+import data from '../data/data';
+import AbstractView from '../views/AbstractView';
 
 export default class WelcomeView extends AbstractView {
-  constructor(rules) {
+  constructor() {
     super();
-    this.rules = rules;
   }
 
   get template() {
     return `
       <section class="welcome">
-        <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
-        <button class="welcome__button"><span class="visually-hidden">Начать игру</span></button>
-        <h2 class="welcome__rules-title">Правила игры</h2>
-        <p class="welcome__text">Правила просты:</p>
+        <div class="welcome__logo"><img src="img/melody-logo.png" alt="${data.header.logo}" width="186" height="83"></div>
+        <button class="welcome__button"><span class="visually-hidden">${data.buttons.play}</span></button>
+        <h2 class="welcome__rules-title">${data.welcome.title}</h2>
+        <p class="welcome__text">${data.welcome.rulesTitle}</p>
         <ul class="welcome__rules-list">
-          ${this.getRulesTemplate}
+          <li>${data.welcome.ruleOne}</li>
+          <li>${data.welcome.ruleTwo}</li>
         </ul>
-        <p class="welcome__text">Удачи!</p>
+        <p class="welcome__text">${data.welcome.welcomText}</p>
       </section>
     `;
   }
 
-  get getRulesTemplate() {
-    return this.rules.map((it) => `<li>${it}</li>`).join(``);
-  }
+  playButtonClickHandler() {}
 
-  bind(element) {
-    const welcomeButton = element.querySelector(`.welcome__button`);
-    welcomeButton.addEventListener(`click`, this.onWelcomeButtonClick);
-  }
+  bind() {
+    const playButton = this.element.querySelector(`.welcome__button`);
 
-  onWelcomeButtonClick() {}
+    playButton.addEventListener(`click`, () => {
+      this.playButtonClickHandler();
+    });
+  }
 }
