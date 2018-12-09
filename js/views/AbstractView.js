@@ -1,4 +1,4 @@
-import {getElementFromString} from '../utils';
+import {getElementFromTemplate} from '../utils';
 
 export default class AbstractView {
   constructor() {
@@ -21,7 +21,7 @@ export default class AbstractView {
   }
 
   render() {
-    return getElementFromString(this.template);
+    return getElementFromTemplate(this.template);
   }
 
   bind() {}

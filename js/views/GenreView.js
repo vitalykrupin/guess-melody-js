@@ -1,6 +1,6 @@
 import {playerGenre} from '../screens/player';
 import AbstractView from '../views/AbstractView';
-import string from '../data/data';
+import content from '../data/game-content';
 import header from '../screens/header';
 
 const DEBUG = true;
@@ -31,7 +31,7 @@ export default class GenreView extends AbstractView {
                 `;
               })
               .join(` `)}
-            <button class="game__submit button" type="submit">${string.buttons.answerSend}</button>
+            <button class="game__submit button" type="submit">${content.buttons.answerSend}</button>
           </form>
         </section>
       </section>

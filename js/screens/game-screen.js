@@ -1,4 +1,4 @@
-import {showScreen, getElementFromString} from "../utils";
+import {showScreen, getElementFromTemplate} from "../utils";
 import ArtistView from "../views/ArtistView";
 import GenreView from "../views/GenreView";
 import FailView from '../views/FailView';
@@ -31,7 +31,7 @@ export default class GameScreen {
   }
 
   updateHeader() {
-    const headerNode = getElementFromString(header(this.model.state));
+    const headerNode = getElementFromTemplate(header(this.model.state));
     this.screen.element.replaceChild(headerNode, this.screen.element.firstElementChild);
   }
 

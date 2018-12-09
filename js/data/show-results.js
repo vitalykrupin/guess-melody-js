@@ -1,11 +1,11 @@
-import data from './data';
+import content from './game-content';
 
 export const showResults = (statistics, gameResult) => {
   if (gameResult.time <= 0) {
-    return `${data.result.timeLose}`;
+    return `${content.result.timeLose}`;
   }
   if (gameResult.lives <= 0) {
-    return `${data.result.loseStat}`;
+    return `${content.result.loseStat}`;
   }
   const userPoints = gameResult.UserPoint;
   const points = statistics.map((item) => item.points);

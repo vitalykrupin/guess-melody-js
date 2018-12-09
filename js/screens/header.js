@@ -1,4 +1,4 @@
-import data from '../data/data';
+import content from '../data/game-content';
 import {initialState} from '../data/game-data';
 
 export const getMin = (time) => {
@@ -14,8 +14,8 @@ export const getSec = (time)=> {
 export default (state) => `
   <header class="game__header">
     <a class="game__back" href="#">
-      <span class="visually-hidden">${data.buttons.replay}</span>
-      <img class="game__logo" src="img/melody-logo-ginger.png" alt="${data.header.logo}">
+      <span class="visually-hidden">${content.buttons.replay}</span>
+      <img class="game__logo" src="img/melody-logo-ginger.png" alt="${content.header.logo}">
     </a>
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
       <circle class="timer__line" cx="390" cy="390" r="370"
