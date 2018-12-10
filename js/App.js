@@ -2,9 +2,9 @@ import {showScreen} from './utils';
 import WelcomeScreen from './screens/welcome-screen';
 import GameScreen from './screens/game-screen';
 import GameModel from './data/game-model';
-import {initialState} from './data/game-data';
+import {InitialState} from './data/game-data';
 import ErrorView from './views/ErrorView';
-import adaptServerData from './data/data-adapter';
+import adaptServerData from './data/data-converter';
 
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
@@ -15,7 +15,6 @@ const checkStatus = (response) => {
 };
 
 const GET_URL = `https://es.dump.academy/guess-melody/questions`;
-
 
 export default class App {
 
@@ -53,7 +52,7 @@ export default class App {
   }
 
   static startGame(data) {
-    data.forEach((el) => initialState.questions.push(el));
+    data.forEach((el) => InitialState.questions.push(el));
     App.showWelcome().screen.play();
   }
 }
