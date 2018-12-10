@@ -20,13 +20,13 @@ export default class FailView extends AbstractView {
 
   get template() {
     return `
-      <section class="result">
-        <div class="result__logo"><img src="img/melody-logo.png" alt="${content.header.logo}" width="186" height="83"></div>
-        <h2 class="result__title">${this.replic}</h2>
-        <p class="result__total result__total--fail">${showResults(this.results, this.result)}</p>
-        <button class="result__replay" type="button">${content.buttons.loseReplay}</button>
-      </section>
-    `;
+<section class="result">
+<div class="result__logo"><img src="img/melody-logo.png" alt="${content.header.logo}" width="186" height="83"></div>
+<h2 class="result__title">${this.replic}</h2>
+<p class="result__total result__total--fail">${showResults(this.results, this.result)}</p>
+<button class="result__replay" type="button">${content.buttons.loseReplay}</button>
+</section>
+`;
   }
 
   replayButtonClickHandler() {}

@@ -1,6 +1,5 @@
 import {playerArtist} from '../screens/player';
 import AbstractView from '../views/AbstractView';
-import header from '../screens/header';
 
 const DEBUG = true;
 const DEBUG_STYLE = `style="color:red;"`;
@@ -15,7 +14,6 @@ export default class ArtistView extends AbstractView {
   get template() {
     return `
       <section class="game game--artist">
-      ${header(this.state)}
         <section class="game__screen">
           <h2 class="game__title">${this.questions.question}</h2>
           ${playerArtist(this.questions.src)}
@@ -55,9 +53,11 @@ export default class ArtistView extends AbstractView {
     });
 
     const playerButton = this.element.querySelector(`.track__button`);
-    const audio = this.element.querySelector(`audio`);
 
-    const playAudio = () => {
+    playerButton.classList.replace(`track__button--play`, `track__button--pause`);
+
+    const playAudioHandler = () => {
+      const audio = this.element.querySelector(`audio`);
       if (audio.paused) {
         playerButton.classList.replace(`track__button--play`, `track__button--pause`);
         audio.play();
@@ -66,10 +66,13 @@ export default class ArtistView extends AbstractView {
         audio.pause();
       }
     };
-    playerButton.addEventListener(`click`, playAudio);
+    playerButton.addEventListener(`click`, playAudioHandler);
 
-    this.element.querySelector(`.game__back`).addEventListener(`click`, () => {
-      this.replayButtonClickHandler();
+    this.element.addEventListener(`click`, (evt) => {
+      if (evt.target.classList.contains(`game__back`) || evt.target.classList.contains(`game__logo`)) {
+        evt.preventDefault();
+        this.replayButtonClickHandler();
+      }
     });
   }
 }
