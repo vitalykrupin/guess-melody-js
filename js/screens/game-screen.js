@@ -1,6 +1,6 @@
-import {showScreen, getElementFromTemplate} from "../utils";
-import ArtistView from "../views/ArtistView";
-import GenreView from "../views/GenreView";
+import {showScreen} from '../utils';
+import ArtistView from '../views/ArtistView';
+import GenreView from '../views/GenreView';
 import FailView from '../views/FailView';
 import WinView from '../views/WinView';
 import App from '../App';
@@ -34,8 +34,8 @@ export default class GameScreen {
   }
 
   updateHeader() {
-    const headerNode = getElementFromTemplate(header(this.model.state));
-    this.screen.element.replaceChild(headerNode, this.screen.element.firstElementChild);
+    this.headerView = new HeaderView(this.model.state);
+    this.screen.element.replaceChild(this.headerView.element, this.screen.element.firstChild);
   }
 
   startTimer() {
@@ -48,11 +48,6 @@ export default class GameScreen {
 
   stopTimer() {
     clearTimeout(this.timer);
-  }
-
-  updateHeader() {
-    this.headerView = new HeaderView(this.model.state);
-    this.screen.element.replaceChild(this.headerView.element, this.screen.element.firstChild);
   }
 
   showModal() {
