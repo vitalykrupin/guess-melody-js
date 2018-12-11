@@ -20,7 +20,7 @@ export const formatWord = (number, item) => {
 
 const main = document.querySelector(`.app`).querySelector(`.main`);
 
-export const getElementFromString = (str) => new DOMParser().parseFromString(str, `text/html`).body.firstChild;
+export const getElementFromTemplate = (template) => new DOMParser().parseFromString(template, `text/html`).body.firstChild;
 
 export const showScreen = (screen) => {
   main.textContent = ``;

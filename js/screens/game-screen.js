@@ -1,10 +1,11 @@
-import {showScreen, getElementFromString} from "../utils";
-import ArtistView from "../views/ArtistView";
-import GenreView from "../views/GenreView";
+import {showScreen} from '../utils';
+import ArtistView from '../views/ArtistView';
+import GenreView from '../views/GenreView';
 import FailView from '../views/FailView';
 import WinView from '../views/WinView';
 import App from '../App';
-import header from '../screens/header';
+import HeaderView from '../views/HeaderView';
+import ConfirmView from '../views/ConfirmView';
 
 const ScreenView = {
   artist: ArtistView,
@@ -16,12 +17,14 @@ export default class GameScreen {
     this.model = model;
     this.ONE_SECOND = 1000;
     this.screen = new ScreenView[this.model.screenQuestion().type](this.model.state, this.model.screenQuestion());
+    this.confirmView = new ConfirmView();
+    this.headerView = new HeaderView(this.model.state);
+    this.screen.element.insertBefore(this.headerView.element, this.screen.element.firstChild);
     this.bind();
   }
 
   get element() {
     this.startTimer();
-    this.updateHeader();
     return this.screen.element;
   }
 
@@ -31,19 +34,32 @@ export default class GameScreen {
   }
 
   updateHeader() {
-    const headerNode = getElementFromString(header(this.model.state));
-    this.screen.element.replaceChild(headerNode, this.screen.element.firstElementChild);
+    this.headerView = new HeaderView(this.model.state);
+    this.screen.element.replaceChild(this.headerView.element, this.screen.element.firstChild);
   }
 
   startTimer() {
     this.timer = setTimeout(() => {
       this.model.tick();
+      this.updateHeader();
       this.startTimer();
     }, this.ONE_SECOND);
   }
 
   stopTimer() {
     clearTimeout(this.timer);
+  }
+
+  showModal() {
+    this.confirmView.showModal();
+    this.confirmView.confirmButtonClickHandler = () => {
+      this.stopTimer();
+      App.start();
+      this.confirmView.closeModal();
+    };
+    this.confirmView.closeModalClickHandler = () => {
+      this.confirmView.closeModal();
+    };
   }
 
   bind() {
@@ -62,8 +78,7 @@ export default class GameScreen {
     };
 
     this.screen.replayButtonClickHandler = () => {
-      App.showWelcome();
+      this.showModal();
     };
-
   }
 }
