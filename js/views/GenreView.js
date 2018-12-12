@@ -19,7 +19,7 @@ export default class GenreView extends AbstractView {
           <h2 class="game__title">${this.questions.question}</h2>
           <form class="game__tracks">
             ${[...Object.entries(this.questions.answers)]
-              .map(([id, answer]) =>{
+              .map(([id, answer]) => {
                 return `
                   ${playerGenre(answer.song.src)}
                   <div class="game__answer">
@@ -29,7 +29,7 @@ export default class GenreView extends AbstractView {
                   </div>
                 `;
               })
-                .join(` `)}
+              .join(` `)}
             <button class="game__submit button" type="submit">${content.buttons.answerSend}</button>
           </form>
         </section>
