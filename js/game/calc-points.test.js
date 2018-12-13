@@ -3,7 +3,7 @@ import {calculatePoints} from './calc-points';
 
 describe(`Calculate Points`, () => {
   it(`should return -1 when answers < 10`, () => {
-    assert.equal(calculatePoints({answersArr: [
+    assert.equal(calculatePoints({answers: [
       {correct: true, time: 30},
       {correct: true, time: 30},
       {correct: true, time: 30}
@@ -11,7 +11,7 @@ describe(`Calculate Points`, () => {
   });
 
   it(`should return {points: 12, pointFast: 12} when 8 answers are correct and time of correct answer < 30 seconds`, () => {
-    assert.deepEqual(calculatePoints({answersArr: [
+    assert.deepEqual(calculatePoints({answers: [
       {correct: true, time: 26},
       {correct: true, time: 17},
       {correct: true, time: 25},
@@ -26,7 +26,7 @@ describe(`Calculate Points`, () => {
   });
 
   it(`should return 1 when 7 answers are correct and time of correct answer > 30 seconds`, () => {
-    assert.deepEqual(calculatePoints({answersArr: [
+    assert.deepEqual(calculatePoints({answers: [
       {correct: true, time: 36},
       {correct: true, time: 37},
       {correct: true, time: 35},
@@ -41,7 +41,7 @@ describe(`Calculate Points`, () => {
   });
 
   it(`should return 10 if all answers are correct and time > 30 seconds`, () => {
-    assert.deepEqual(calculatePoints({answersArr: [
+    assert.deepEqual(calculatePoints({answers: [
       {correct: true, time: 36},
       {correct: true, time: 37},
       {correct: true, time: 35},
@@ -56,7 +56,7 @@ describe(`Calculate Points`, () => {
   });
 
   it(`should return 20 if all answers are correct and time < 30 seconds`, () => {
-    assert.deepEqual(calculatePoints({answersArr: [
+    assert.deepEqual(calculatePoints({answers: [
       {correct: true, time: 26},
       {correct: true, time: 17},
       {correct: true, time: 25},
@@ -71,7 +71,7 @@ describe(`Calculate Points`, () => {
   });
 
   it(`should return -20 if all answers are not correct`, () => {
-    assert.deepEqual(calculatePoints({answersArr: [
+    assert.deepEqual(calculatePoints({answers: [
       {correct: false, time: 26},
       {correct: false, time: 17},
       {correct: false, time: 25},
