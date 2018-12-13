@@ -22,8 +22,8 @@ export default Object.freeze({
   },
   result: {
     win: `Вы настоящий меломан!`,
-    loseReplic: `Какая жалость!`,
-    timeLoseReplic: `Увы и ах!`,
+    loseReplica: `Какая жалость!`,
+    timeLoseReplica: `Увы и ах!`,
     loseStat: `У вас закончились все попытки. Ничего, повезёт в следующий раз!`,
     timeLose: `Время вышло! Вы не успели отгадать все мелодии`,
   },
