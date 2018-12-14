@@ -17,7 +17,7 @@ export default class WelcomeView extends AbstractView {
           <li>${content.welcome.ruleOne}</li>
           <li>${content.welcome.ruleTwo}</li>
         </ul>
-        <p class="welcome__text">${content.welcome.welcomText}</p>
+        <p class="welcome__text">${content.welcome.text}</p>
       </section>
     `;
   }
