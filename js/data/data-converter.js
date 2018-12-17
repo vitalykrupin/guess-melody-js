@@ -1,5 +1,5 @@
 const convertArtistAnswers = (answers) => {
-  let screenAnswers = {};
+  const screenAnswers = {};
   answers.forEach((item, i) => {
     screenAnswers[`artist-${i}`] = {
       song: {
@@ -13,7 +13,7 @@ const convertArtistAnswers = (answers) => {
 };
 
 const convertGenreAnswers = (answers, genre) => {
-  let screenAnswers = {};
+  const screenAnswers = {};
   answers.forEach((item, i) => {
     screenAnswers[`answer-${i}`] = {
       song: {

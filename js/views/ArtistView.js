@@ -1,7 +1,7 @@
-import {playerArtist} from '../screens/player';
+import {getArtistPlayer, playTrack} from '../screens/player';
 import AbstractView from '../views/AbstractView';
 
-const DEBUG = true;
+const DEBUG = new URLSearchParams(location.search).has(`debug`);
 const DEBUG_STYLE = `style="color:red;"`;
 
 export default class ArtistView extends AbstractView {
@@ -16,7 +16,7 @@ export default class ArtistView extends AbstractView {
       <section class="game game--artist">
         <section class="game__screen">
           <h2 class="game__title">${this.questions.question}</h2>
-          ${playerArtist(this.questions.src)}
+          ${getArtistPlayer(this.questions.src)}
           <form class="game__artist">
             ${[...Object.entries(this.questions.answers)]
               .map(([value, answer], i) => {
@@ -25,7 +25,7 @@ export default class ArtistView extends AbstractView {
                     <input class="artist__input visually-hidden" type="radio" name="answer" value="${value}" id="answer-${i + 1}">
                     <label class="artist__name" ${DEBUG && answer.correct ? DEBUG_STYLE : ``} for="answer-${i + 1}">
                       <img class="artist__picture" src="${answer.song.image}" alt="${answer.song.name}">
-                        ${answer.song.name}
+                      ${answer.song.name}
                     </label>
                   </div>
                 `;
@@ -44,6 +44,7 @@ export default class ArtistView extends AbstractView {
   bind() {
     const form = this.element.querySelector(`.game__artist`);
     const answerButton = Array.from(form.querySelectorAll(`.artist__input`));
+    const tracks = Array.from(this.element.querySelectorAll(`.game__track`));
 
     answerButton.forEach((item) => {
       item.addEventListener(`click`, () => {
@@ -52,21 +53,7 @@ export default class ArtistView extends AbstractView {
       });
     });
 
-    const playerButton = this.element.querySelector(`.track__button`);
-
-    playerButton.classList.replace(`track__button--play`, `track__button--pause`);
-
-    const playAudioHandler = () => {
-      const audio = this.element.querySelector(`audio`);
-      if (audio.paused) {
-        playerButton.classList.replace(`track__button--play`, `track__button--pause`);
-        audio.play();
-      } else {
-        playerButton.classList.replace(`track__button--pause`, `track__button--play`);
-        audio.pause();
-      }
-    };
-    playerButton.addEventListener(`click`, playAudioHandler);
+    playTrack(tracks);
 
     this.element.addEventListener(`click`, (evt) => {
       if (evt.target.classList.contains(`game__back`) || evt.target.classList.contains(`game__logo`)) {

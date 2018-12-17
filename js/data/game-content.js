@@ -2,16 +2,6 @@ export default Object.freeze({
   header: {
     logo: `Угадай мелодию`,
   },
-  welcome: {
-    title: `Правила игры`,
-    rulesTitle: `Правила просты:`,
-    ruleOne: `За 5 минут нужно ответить на все вопросы.`,
-    ruleTwo: `Можно допустить 3 ошибки.`,
-    welcomText: `Удачи!`
-  },
-  artist: {
-    question: `Кто исполняет эту песню?`,
-  },
   modal: {
     title: `Подтверждение`,
     confirm: `Вы уверены что хотите начать игру заново?`
@@ -19,6 +9,16 @@ export default Object.freeze({
   modalError: {
     title: `Произошла ошибка!`,
     text: `Статус: 404. Пожалуйста, перезагрузите страницу.`
+  },
+  welcome: {
+    title: `Правила игры`,
+    rulesTitle: `Правила просты:`,
+    ruleOne: `За 5 минут нужно ответить на все вопросы.`,
+    ruleTwo: `Можно допустить 3 ошибки.`,
+    text: `Удачи!`
+  },
+  artist: {
+    question: `Кто исполняет эту песню?`,
   },
   result: {
     win: `Вы настоящий меломан!`,

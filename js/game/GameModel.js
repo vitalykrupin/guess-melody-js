@@ -1,4 +1,4 @@
-import {InitialState, MAX_QUESTIONS} from './game-data';
+import {InitialState} from '../data/game-data';
 
 const getScreenQuestion = (state) => state.questions[state.level];
 
@@ -20,7 +20,7 @@ export default class GameModel {
   }
 
   restart() {
-    this._state = Object.assign({}, InitialState, {answersArr: []});
+    this._state = Object.assign({}, InitialState, {answers: []});
   }
 
   fail() {
@@ -28,7 +28,11 @@ export default class GameModel {
   }
 
   win() {
-    return this._state.answersArr.length === MAX_QUESTIONS;
+    return this._state.answers.length === this._state.questions.length;
+  }
+
+  getAnswerTime() {
+    return InitialState.time - this._state.time;
   }
 
   getAnswers(answer) {
@@ -36,7 +40,7 @@ export default class GameModel {
     if (!correct) {
       this._state.lives--;
     }
-    this._state.answersArr.push({correct, time: InitialState.time - this._state.time});
+    this._state.answers.push({correct, time: this.getAnswerTime()});
   }
 
   tick() {

@@ -4,8 +4,10 @@ import GenreView from '../views/GenreView';
 import FailView from '../views/FailView';
 import WinView from '../views/WinView';
 import App from '../App';
-import HeaderView from '../views/HeaderView';
 import ConfirmView from '../views/ConfirmView';
+import HeaderView from '../views/HeaderView';
+
+const ONE_SECOND = 1000;
 
 const ScreenView = {
   artist: ArtistView,
@@ -15,7 +17,6 @@ const ScreenView = {
 export default class GameScreen {
   constructor(model) {
     this.model = model;
-    this.ONE_SECOND = 1000;
     this.screen = new ScreenView[this.model.screenQuestion().type](this.model.state, this.model.screenQuestion());
     this.confirmView = new ConfirmView();
     this.headerView = new HeaderView(this.model.state);
@@ -33,21 +34,25 @@ export default class GameScreen {
     showScreen(new GameScreen(this.model).element);
   }
 
-  updateHeader() {
-    this.headerView = new HeaderView(this.model.state);
-    this.screen.element.replaceChild(this.headerView.element, this.screen.element.firstChild);
-  }
-
   startTimer() {
     this.timer = setTimeout(() => {
       this.model.tick();
       this.updateHeader();
       this.startTimer();
-    }, this.ONE_SECOND);
+      if (this.model.fail()) {
+        this.stopTimer();
+        App.showResult(new FailView(this.model.state));
+      }
+    }, ONE_SECOND);
   }
 
   stopTimer() {
     clearTimeout(this.timer);
+  }
+
+  updateHeader() {
+    this.headerView = new HeaderView(this.model.state);
+    this.screen.element.replaceChild(this.headerView.element, this.screen.element.firstChild);
   }
 
   showModal() {
@@ -80,5 +85,6 @@ export default class GameScreen {
     this.screen.replayButtonClickHandler = () => {
       this.showModal();
     };
+
   }
 }
