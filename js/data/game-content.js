@@ -15,7 +15,7 @@ export default Object.freeze({
     rulesTitle: `Правила просты:`,
     ruleOne: `За 5 минут нужно ответить на все вопросы.`,
     ruleTwo: `Можно допустить 3 ошибки.`,
-    welcomText: `Удачи!`
+    text: `Удачи!`
   },
   artist: {
     question: `Кто исполняет эту песню?`,

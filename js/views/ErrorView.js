@@ -9,10 +9,11 @@ export default class ErrorView extends AbstractView {
 
   get template() {
     return `
-    <section class="modal">
-    <h2 class="modal__title">${content.modalError.title}</h2>
-    <p class="modal__text">${content.modalError.status}&#160${this.error.message}.${content.modalError.text}</p>
-  </section>`;
+      <section class="modal">
+        <h2 class="modal__title">${content.modalError.title}</h2>
+        <p class="modal__text">${content.modalError.status}&#160${this.error.message}.${content.modalError.text}</p>
+      </section>
+    `;
   }
 
   showModal() {
