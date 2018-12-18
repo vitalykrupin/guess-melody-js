@@ -1,8 +1,6 @@
 import {getArtistPlayer, playTrack} from '../screens/player';
+import {DEBUG, DEBUG_STYLE} from '../utils';
 import AbstractView from '../views/AbstractView';
-
-const DEBUG = new URLSearchParams(location.search).has(`debug`);
-const DEBUG_STYLE = `style="color:red;"`;
 
 export default class ArtistView extends AbstractView {
   constructor(state, questions) {
@@ -43,12 +41,12 @@ export default class ArtistView extends AbstractView {
 
   bind() {
     const form = this.element.querySelector(`.game__artist`);
-    const answerButton = Array.from(form.querySelectorAll(`.artist__input`));
+    const answers = Array.from(form.querySelectorAll(`.artist__input`));
     const tracks = Array.from(this.element.querySelectorAll(`.game__track`));
 
-    answerButton.forEach((item) => {
+    answers.forEach((item) => {
       item.addEventListener(`click`, () => {
-        const checkedAnswer = answerButton.filter((input) => input.checked).map((element) => element.value);
+        const checkedAnswer = answers.filter((input) => input.checked).map((element) => element.value);
         this.answerButtonClickHandler(checkedAnswer);
       });
     });

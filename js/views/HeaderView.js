@@ -5,13 +5,15 @@ import {getRadius} from '../game/get-radius';
 
 const FINISHED = 30;
 const RADIUS = 370;
+const SIXTY_SEC = 60;
+const TEN_SEC = 10;
 
 export default class HeaderView extends AbstractView {
   constructor(state) {
     super();
     this.state = state;
-    this.min = Math.floor(this.state.time / 60);
-    this.sec = Math.floor(this.state.time % 60);
+    this.min = Math.floor(this.state.time / SIXTY_SEC);
+    this.sec = Math.floor(this.state.time % SIXTY_SEC);
     this.line = getRadius(RADIUS, this.state.time);
   }
 
@@ -30,7 +32,7 @@ export default class HeaderView extends AbstractView {
         <div class="timer__value ${this.state.time < FINISHED ? `timer__value--finished` : ``}" xmlns="http://www.w3.org/1999/xhtml">
           <span class="timer__mins">0${this.min}</span>
           <span class="timer__dots">:</span>
-          <span class="timer__secs">${(this.sec < 10) ? `0${this.sec}` : this.sec}</span>
+          <span class="timer__secs">${(this.sec < TEN_SEC) ? `0${this.sec}` : this.sec}</span>
         </div>
         <div class="game__mistakes">
           ${`<div class="wrong"></div>`.repeat(InitialState.lives - this.state.lives)}
