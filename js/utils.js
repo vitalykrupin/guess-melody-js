@@ -28,4 +28,5 @@ export const showScreen = (screen) => {
 };
 
 export const DEBUG = new URLSearchParams(location.search).has(`debug`);
+
 export const DEBUG_STYLE = `style="color:red;"`;

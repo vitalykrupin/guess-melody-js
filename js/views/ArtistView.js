@@ -1,6 +1,6 @@
 import {getArtistPlayer, playTrack} from '../screens/player';
-import AbstractView from '../views/AbstractView';
 import {DEBUG, DEBUG_STYLE} from '../utils';
+import AbstractView from '../views/AbstractView';
 
 export default class ArtistView extends AbstractView {
   constructor(state, questions) {

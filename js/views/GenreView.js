@@ -1,7 +1,7 @@
 import {getGenrePlayer, playTrack} from '../screens/player';
+import {DEBUG, DEBUG_STYLE} from '../utils';
 import AbstractView from '../views/AbstractView';
 import content from '../data/game-content';
-import {DEBUG, DEBUG_STYLE} from '../utils';
 
 export default class GenreView extends AbstractView {
   constructor(state, questions) {
