@@ -1,9 +1,7 @@
 import {getGenrePlayer, playTrack} from '../screens/player';
 import AbstractView from '../views/AbstractView';
 import content from '../data/game-content';
-
-const DEBUG = new URLSearchParams(location.search).has(`debug`);
-const DEBUG_STYLE = `style="border:1px solid red;"`;
+import {DEBUG, DEBUG_STYLE} from '../utils';
 
 export default class GenreView extends AbstractView {
   constructor(state, questions) {

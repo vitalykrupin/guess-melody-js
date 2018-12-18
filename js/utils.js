@@ -12,9 +12,9 @@ export const formatWord = (number, item) => {
     return words[0];
   } else if ((number >= 2 && number <= 4) || (number > 20 && number % 10 >= 2 && number % 10 <= 4)) {
     return words[1];
-  } else {
-    return words[2];
   }
+
+  return words[2];
 };
 
 
@@ -26,3 +26,6 @@ export const showScreen = (screen) => {
   main.textContent = ``;
   main.appendChild(screen);
 };
+
+export const DEBUG = new URLSearchParams(location.search).has(`debug`);
+export const DEBUG_STYLE = `style="color:red;"`;
