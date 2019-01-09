@@ -10,9 +10,12 @@ const minify = require(`gulp-csso`);
 const rename = require(`gulp-rename`);
 const imagemin = require(`gulp-imagemin`);
 const rollup = require(`gulp-better-rollup`);
-const sourcemaps = require(`gulp-sourcemaps`);
+// const sourcemaps = require(`gulp-sourcemaps`);
 const mocha = require(`gulp-mocha`);
 const commonjs = require(`rollup-plugin-commonjs`);
+const browserify = require(`browserify`);
+const source = require(`vinyl-source-stream`);
+const tsify = require(`tsify`);
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -37,13 +40,18 @@ gulp.task(`style`, () => {
     pipe(gulp.dest(`build/css`));
 });
 
-gulp.task(`scripts`, () => {
-  return gulp.src(`js/main.js`)
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(rollup({}, `iife`))
-    .pipe(sourcemaps.write(``))
-    .pipe(gulp.dest(`build/js`));
+gulp.task(`scripts`, function () {
+  return browserify({
+    basedir: `.`,
+    debug: true,
+    entries: [`js/main.ts`],
+    cache: {},
+    packageCache: {}
+  })
+  .plugin(tsify)
+  .bundle()
+  .pipe(source(`main.js`))
+  .pipe(gulp.dest(`build/js`));
 });
 
 gulp.task(`imagemin`, [`copy`], () => {

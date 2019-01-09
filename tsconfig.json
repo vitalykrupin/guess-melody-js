@@ -1,0 +1,15 @@
+{
+  "files": [
+    "./js/main.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "./build",
+    "allowJs": false,
+    "target": "es2015",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true
+  }
+}

@@ -35,5 +35,10 @@
   },
   "engines": {
     "node": "10"
+  },
+  "dependencies": {
+    "browserify": "^16.2.3",
+    "tsify": "^4.0.1",
+    "vinyl-source-stream": "^2.0.0"
   }
 }
