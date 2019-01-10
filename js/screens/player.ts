@@ -14,8 +14,8 @@ export const getArtistPlayer = (src) => `
 `;
 
 export const playTrack = (tracks) => {
-  const audios = Array.from(tracks.map((item) => item.querySelector(`audio`)));
-  const buttons = Array.from(tracks.map((item) => item.querySelector(`button`)));
+  const audios: any = Array.from(tracks.map((item) => item.querySelector(`audio`)));
+  const buttons: any = Array.from(tracks.map((item) => item.querySelector(`button`)));
 
   const stopAll = () => {
     buttons.forEach((button, index) => {

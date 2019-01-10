@@ -15,6 +15,12 @@ const ScreenView = {
 };
 
 export default class GameScreen {
+  model: any;
+  screen: any;
+  confirmView: ConfirmView;
+  headerView: HeaderView;
+  timer: NodeJS.Timeout;
+
   constructor(model) {
     this.model = model;
     this.screen = new ScreenView[this.model.screenQuestion().type](this.model.state, this.model.screenQuestion());
