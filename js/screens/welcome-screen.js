@@ -1,12 +1,10 @@
-// import {InitialState} from '../data/game-data';
+import {InitialState} from '../data/game-data';
 import WelcomeView from '../views/WelcomeView';
 import App from '../App';
 
 export default class WelcomeScreen {
-  screen: WelcomeView;
-
   constructor() {
-    this.screen = new WelcomeView();
+    this.screen = new WelcomeView(InitialState);
     this.bind();
   }
 
