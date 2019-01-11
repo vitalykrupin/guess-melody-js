@@ -1,11 +1,8 @@
 import {getArtistPlayer, playTrack} from '../screens/player';
 import {DEBUG, DEBUG_STYLE} from '../utils';
-import AbstractView from './AbstractView';
+import AbstractView from '../views/AbstractView';
 
 export default class ArtistView extends AbstractView {
-  state: any;
-  questions: any;
-
   constructor(state, questions) {
     super();
     this.state = state;
@@ -21,7 +18,6 @@ export default class ArtistView extends AbstractView {
           <form class="game__artist">
             ${[...Object.entries(this.questions.answers)]
               .map(([value, answer], i) => {
-                //@ts-ignore
                 return `
                   <div class="artist">
                     <input class="artist__input visually-hidden" type="radio" name="answer" value="${value}" id="answer-${i + 1}">
@@ -51,8 +47,7 @@ export default class ArtistView extends AbstractView {
     answers.forEach((item) => {
       item.addEventListener(`click`, () => {
         const checkedAnswer = answers.filter((input) => input.checked).map((element) => element.value);
-        this.answerButtonClickHandler();
-        // this.answerButtonClickHandler(checkedAnswer);
+        this.answerButtonClickHandler(checkedAnswer);
       });
     });
 
