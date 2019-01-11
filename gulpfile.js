@@ -13,9 +13,15 @@ const rollup = require(`gulp-better-rollup`);
 // const sourcemaps = require(`gulp-sourcemaps`);
 const mocha = require(`gulp-mocha`);
 const commonjs = require(`rollup-plugin-commonjs`);
+// const resolve = require(`rollup-plugin-node-resolve`);
+// const babel = require(`rollup-plugin-babel`);
+// const uglifyjs = require(`uglify-es`);
+// const composer = require(`gulp-uglify/composer`);
+// const jsminify = composer(uglifyjs, console);
 const browserify = require(`browserify`);
 const source = require(`vinyl-source-stream`);
 const tsify = require(`tsify`);
+const babelify = require(`babelify`);
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -49,10 +55,64 @@ gulp.task(`scripts`, function () {
     packageCache: {}
   })
   .plugin(tsify)
+  .transform(babelify.configure({presets: [`@babel/env`]}))
   .bundle()
   .pipe(source(`main.js`))
   .pipe(gulp.dest(`build/js`));
 });
+
+// gulp.task(`babel`, function () {
+//   return
+// });
+
+// gulp.task(`scripts`, () => {
+//   return gulp.src(`js/main.ts`)
+//     .pipe(plumber())
+//     .pipe(sourcemaps.init())
+//     .pipe(rollup({
+//       plugins: [
+//         babel({
+//           babelrc: false,
+//           exclude: `node_modules/**`,
+//           presets: [`@babel/env`]
+//         })
+//       ]
+//     }, `iife`))
+//     .pipe(sourcemaps.write(``))
+//     .pipe(gulp.dest(`build/js`));
+// });
+
+// gulp.task(`scripts`, () => {
+//   return browserify({
+//     basedir: `.`,
+//     debug: true,
+//     entries: [`js/main.ts`],
+//     // cache: {},
+//     // packageCache: {}
+//   })
+//     .plugin(tsify)
+//     .transform(babelify.configure({presets: [`@babel/env`]}))
+//     .bundle()
+//     .pipe(source(`main.js`))
+//     // .pipe(plumber())
+//     .pipe(sourcemaps.init())
+//     .pipe(rollup({
+//       plugins: [
+//         resolve({browser: true}),
+//         commonjs(),
+//         babel({
+//           babelrc: false,
+//           exclude: `node_modules/**`,
+//           presets: [`@babel/env`]
+//         })
+//       ]
+//     }, `iife`))
+//     .pipe(jsminify())
+//     .pipe(sourcemaps.write(``))
+//     // .pipe(plumber.stop())
+//     .pipe(gulp.dest(`build/js`));
+// });
+
 
 gulp.task(`imagemin`, [`copy`], () => {
   return gulp.src(`build/img/**/*.{jpg,png,gif}`).
