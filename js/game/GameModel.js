@@ -3,49 +3,47 @@ import {InitialState} from '../data/game-data';
 const getScreenQuestion = (state) => state.questions[state.level];
 
 export default class GameModel {
-  state: any
-
   constructor() {
     this.restart();
   }
 
-  // get state() {
-  //   return this.state;
-  // }
+  get state() {
+    return this._state;
+  }
 
   screenQuestion() {
-    return getScreenQuestion(this.state);
+    return getScreenQuestion(this._state);
   }
 
   changeLevel() {
-    return this.state.level++;
+    return this._state.level++;
   }
 
   restart() {
-    this.state = Object.assign({}, InitialState, {answers: []});
+    this._state = Object.assign({}, InitialState, {answers: []});
   }
 
   fail() {
-    return this.state.lives === 0 || this.state.time <= 0;
+    return this._state.lives === 0 || this._state.time <= 0;
   }
 
   win() {
-    return this.state.answers.length === this.state.questions.length;
+    return this._state.answers.length === this._state.questions.length;
   }
 
   getAnswerTime() {
-    return InitialState.time - this.state.time;
+    return InitialState.time - this._state.time;
   }
 
   getAnswers(answer) {
     const correct = Object.keys(this.screenQuestion().answers).every((key) => this.screenQuestion().answers[key].correct === answer.includes(key));
     if (!correct) {
-      this.state.lives--;
+      this._state.lives--;
     }
-    this.state.answers.push({correct, time: this.getAnswerTime()});
+    this._state.answers.push({correct, time: this.getAnswerTime()});
   }
 
   tick() {
-    this.state.time--;
+    this._state.time--;
   }
 }
