@@ -7,13 +7,13 @@ const Points = {
   WRONG: -2
 };
 
-export const calculatePoints = (state) => {
+export const calculatePoints = (state: { answers: { length: number; forEach: (arg0: (answer: any) => void) => void; }; }) => {
   let points = 0;
   let pointFast = 0;
   if (state.answers.length < MAX_QUESTIONS) {
     return Points.LOOSE;
   }
-  state.answers.forEach((answer) => {
+  state.answers.forEach((answer: { correct: any; time: number; }) => {
     if (answer.correct) {
       points += answer.time >= Time.FAST ? Points.DEFAULT : Points.FAST;
       pointFast += answer.time >= Time.FAST ? 0 : Points.FAST;
