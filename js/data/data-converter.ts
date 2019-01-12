@@ -1,6 +1,6 @@
-const convertArtistAnswers = (answers) => {
+const convertArtistAnswers = (answers: { forEach: (arg0: (item: any, i: any) => void) => void; }): Object => {
   const screenAnswers = {};
-  answers.forEach((item, i) => {
+  answers.forEach((item: { title: any; image: { url: any; }; isCorrect: any; }, i: any) => {
     screenAnswers[`artist-${i}`] = {
       song: {
         name: item.title,
@@ -12,9 +12,9 @@ const convertArtistAnswers = (answers) => {
   return screenAnswers;
 };
 
-const convertGenreAnswers = (answers, genre) => {
+const convertGenreAnswers = (answers: { forEach: (arg0: (item: any, i: any) => void) => void; }, genre: any): Object => {
   const screenAnswers = {};
-  answers.forEach((item, i) => {
+  answers.forEach((item: { src: any; genre: any; }, i: any) => {
     screenAnswers[`answer-${i}`] = {
       song: {
         src: item.src
@@ -25,7 +25,7 @@ const convertGenreAnswers = (answers, genre) => {
   return screenAnswers;
 };
 
-export default (data) => {
+export default (data: any) => {
   for (const question of data) {
     question.type = question.type;
     question.title = question.question;
