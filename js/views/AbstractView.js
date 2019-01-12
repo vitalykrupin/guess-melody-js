@@ -26,3 +26,26 @@ export default class AbstractView {
 
   bind() {}
 }
+// import {getElementFromTemplate} from '../utils';
+
+// export default abstract class AbstractView {
+
+//   private _element: ChildNode
+
+//   abstract get template(): string
+
+//   get element() {
+//     if (this._element) {
+//       return this._element;
+//     }
+//     this._element = this.render();
+//     this.bind(this._element);
+//     return this._element;
+//   }
+
+//   private render(): ChildNode {
+//     return getElementFromTemplate(this.template);
+//   }
+
+//   bind(element: ChildNode): void {}
+// }
