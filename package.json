@@ -7,11 +7,14 @@
     "eslint": "eslint ./gulpfile.js js/",
     "stylelint": "stylelint 'sass/**/*.scss' --syntax scss",
     "build": "gulp build",
-    "start": "gulp serve",
+    "start": "gulp build && gulp serve",
     "test": "npm run eslint && npm run stylelint && gulp test"
   },
   "devDependencies": {
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.2.3",
     "autoprefixer": "9.0.2",
+    "babelify": "10.0.0",
     "browser-sync": "^2.26.3",
     "chai": "4.2.0",
     "css-mqpacker": "7.0.0",
@@ -29,11 +32,23 @@
     "gulp-sass": "4.0.1",
     "gulp-sourcemaps": "2.6.4",
     "gulp-svgstore": "6.1.1",
+    "gulp-uglify": "3.0.1",
+    "rollup-plugin-babel": "4.3.0",
     "rollup-plugin-commonjs": "9.2.0",
+    "rollup-plugin-node-resolve": "4.0.0",
     "stylelint": "9.4.x",
-    "stylelint-config-htmlacademy": "0.1.x"
+    "stylelint-config-htmlacademy": "0.1.x",
+    "uglify-es": "3.3.9"
   },
   "engines": {
     "node": "10"
+  },
+  "dependencies": {
+    "@babel/polyfill": "7.2.5",
+    "browserify": "^16.2.3",
+    "source-map-support": "^0.5.10",
+    "tsify": "^4.0.1",
+    "typescript": "^3.2.2",
+    "vinyl-source-stream": "^2.0.0"
   }
 }
