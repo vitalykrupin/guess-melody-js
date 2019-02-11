@@ -30,9 +30,9 @@ export default class AbstractView {
 
 // export default abstract class AbstractView {
 
-//   private _element: ChildNode
+// private _element: ChildNode
 
-//   abstract get template(): string
+// abstract get template(): string
 
 //   get element() {
 //     if (this._element) {

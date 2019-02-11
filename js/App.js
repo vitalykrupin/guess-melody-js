@@ -10,9 +10,9 @@ export default class App {
 
   static start() {
     App.showWelcome();
-    Loader.loadData().
-      then((data) => App.startGame(data)).
-      catch(App.showError);
+    Loader.loadData()
+      .then((data) => App.startGame(data))
+      .catch(App.showError);
   }
 
   static showWelcome() {
@@ -27,17 +27,15 @@ export default class App {
   }
 
   static showResult(result) {
-    result.replayButtonClickHandler = () => {
-      this.showGame();
-    };
+    result.replayButtonClickHandler = () => this.showGame();
     if (result.result.lives > 0 && result.result.time < Time.MAX) {
-      Loader.loadResults().
-          then((data) => {
-            showScreen(result.element);
-            result.showStats(data);
-          }).
-          then(() => Loader.saveResults(result.result)).
-          catch(App.showError);
+      Loader.loadResults()
+        .then((data) => {
+          showScreen(result.element);
+          result.showStats(data);
+        })
+        .then(() => Loader.saveResults(result.result))
+        .catch(App.showError);
     } else {
       showScreen(result.element);
     }
